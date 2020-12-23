@@ -1,14 +1,11 @@
 from collections import Counter
+from functools import lru_cache
 
-cache = {}
-
-
-def unique_chars(input: str):
+@lru_cache
+def unique_chars(input_string: str):
 	'''returns the number of unique characters in the string; has cache'''
-	if input in cache:
-		ul = cache[input]
-	else:
-		c = Counter(input)
-		ul = len([key for key, val in c.items() if val == 1])
-		cache[input] = ul
+	if not isinstance(input_string, str):
+		raise TypeError(f'String expected, got {type(input_string)}')
+	c = Counter(input_string)
+	ul = len([key for key, val in c.items() if val == 1])
 	return ul
